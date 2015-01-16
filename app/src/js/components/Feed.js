@@ -45,19 +45,9 @@ var Feed = React.createClass({
     ref.push(newItem);
   },
   onVote: function(item) {
-    var items = _.uniq(this.state.items);
+    var ref = new Firebase('https://vote123123.firebaseio.com/feed').child(item.identifier);
 
-    var oldObj = _.find(items, function(feedItem){
-      return feedItem.identifier === item.identifier;
-    });
-
-    var newItems = _.pull(items, oldObj);
-
-    newItems.push(item);
-
-    this.setState({
-      items: newItems
-    });
+    ref.update(item);
   },
   render: function() {
     return(
