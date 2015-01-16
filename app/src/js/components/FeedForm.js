@@ -4,8 +4,14 @@ var React = require('react');
 
 var FeedForm = React.createClass({
   render: function() {
+
+    var displayValue = this.props.displayed ? 'block' : 'none';
+    var styles = {
+      display: displayValue
+    };
+
     return(
-      <form className='container'>
+      <form style={styles} className='container'>
         <div className='form-group'>
           <input type='text' className='form-control' placeholder='Title'/>
           <input type='text' className='form-control' placeholder='Description'/>
