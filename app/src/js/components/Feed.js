@@ -12,7 +12,8 @@ var Feed = React.createClass({
   loadData: function() {
     var ref = new Firebase('https://vote123123.firebaseio.com/feed');
     ref.on('value', function(snap){
-      var items = [];
+      var items  = [],
+          sortedItems = [];
 
       snap.forEach(function(itemSnap){
         var item = itemSnap.val();
@@ -20,8 +21,12 @@ var Feed = React.createClass({
         items.push(item);
       });
 
+      sortedItems = _.sortBy(items, function(item){
+        return -item.voteCount;
+      });
+
       this.setState({
-        items: items
+        items: sortedItems
       });
     }.bind(this));
   },
