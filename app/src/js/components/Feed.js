@@ -1,22 +1,36 @@
 /** @jsx React.DOM */
 
-var React = require('react'),
+var React         = require('react'),
     ShowAddButton = require('./ShowAddButton'),
-    FeedForm = require('./FeedForm'),
-    FeedList = require('./FeedList'),
-    _ = require('lodash');
+    FeedForm      = require('./FeedForm'),
+    FeedList      = require('./FeedList'),
+    Firebase      = require('firebase'),
+    _             = require('lodash');
 
 
 var Feed = React.createClass({
-  getInitialState: function() {
-    var FEED_ITEMS = [
-      { identifier: '1', title: 'Angular', description: 'MVVC Framework', voteCount: 14 },
-      { identifier: '2', title: 'Ember', description: 'MVVC Framework', voteCount: 63 },
-      { identifier: '3', title: 'ReactJS', description: 'View Framework', voteCount: 54 }
-    ];
+  loadData: function() {
+    var ref = new Firebase('https://vote123123.firebaseio.com/feed');
+    ref.on('value', function(snap){
+      var items = [];
 
+      snap.forEach(function(itemSnap){
+        var item = itemSnap.val();
+        item.identifier = itemSnap.name();
+        items.push(item);
+      });
+
+      this.setState({
+        items: items
+      });
+    }.bind(this));
+  },
+  componentDidMount: function() {
+    this.loadData();
+  },
+  getInitialState: function() {
     return {
-      items: FEED_ITEMS,
+      items: [],
       formDisplayed: false
     }
   },
@@ -27,12 +41,8 @@ var Feed = React.createClass({
     });
   },
   onNewItem: function(newItem) {
-    newItem.identifier = this.state.items.length;
-    var newItems = this.state.items.concat([newItem]);
-    this.setState({
-      items: newItems,
-      formDisplayed: false
-    });
+    var ref = new Firebase('https://vote123123.firebaseio.com/feed');
+    ref.push(newItem);
   },
   onVote: function(item) {
     var items = _.uniq(this.state.items);
