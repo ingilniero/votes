@@ -8,7 +8,7 @@ var FeedItem = React.createClass({
       <li className='list-group-item clearfix'>
         <span className='badge'>{this.props.voteCount}</span>
         <h4>{this.props.title}</h4>
-        <span>{this.props.description}</span>
+        <span>{this.props.desc}</span>
         <span className='pull-right'>
           <button id='up' className='btn btn-sm btn-success'>&uarr;</button>
           <button id='down' className='btn btn-sm btn-danger'>&darr;</button>
