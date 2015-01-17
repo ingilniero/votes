@@ -4,6 +4,7 @@ var React         = require('react'),
     ShowAddButton = require('./ShowAddButton'),
     FeedForm      = require('./FeedForm'),
     FeedList      = require('./FeedList'),
+    ErrorMessage  = require('./ErrorMessage'),
     Firebase      = require('firebase'),
     _             = require('lodash');
 
@@ -26,7 +27,8 @@ var Feed = React.createClass({
       });
 
       this.setState({
-        items: sortedItems
+        items: sortedItems,
+        hideErrorMessage: true
       });
     }.bind(this));
   },
@@ -36,18 +38,30 @@ var Feed = React.createClass({
   getInitialState: function() {
     return {
       items: [],
-      formDisplayed: false
+      formDisplayed: false,
+      hideErrorMessage: true
     }
   },
 
   onToggleForm: function() {
     this.setState({
-      formDisplayed: !this.state.formDisplayed
+      formDisplayed: !this.state.formDisplayed,
+      hideErrorMessage: true
     });
+  },
+  isValidItem: function(item) {
+    return !!item.title && item.description;
   },
   onNewItem: function(newItem) {
     var ref = new Firebase('https://vote123123.firebaseio.com/feed');
-    ref.push(newItem);
+
+    if(this.isValidItem(newItem)) {
+      ref.push(newItem);
+    } else {
+      this.setState({
+        hideErrorMessage: false
+      });
+    }
   },
   onVote: function(item) {
     var ref = new Firebase('https://vote123123.firebaseio.com/feed').child(item.identifier);
@@ -67,7 +81,9 @@ var Feed = React.createClass({
           <br />
           <div className='row'>
             <div className='col-lg-4 col-md-4 col-xs-8 col-lg-offset-4 col-md-offset-4 col-xs-offset-2'>
-              <FeedForm displayed={this.state.formDisplayed} onNewItem={this.onNewItem}/>
+              <ErrorMessage hideErrorMessage={this.state.hideErrorMessage} />
+              <FeedForm displayed={this.state.formDisplayed}
+                        onNewItem={this.onNewItem}/>
             </div>
           </div>
         </div>
