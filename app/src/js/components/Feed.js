@@ -58,11 +58,19 @@ var Feed = React.createClass({
     return(
       <div>
         <div className='container'>
-          <ShowAddButton displayed={this.state.formDisplayed}
-                         onToggleForm={this.onToggleForm} />
+          <div className='row'>
+            <div className='col-lg-4 col-md-4 col-xs-8 col-lg-offset-4 col-md-offset-4 col-xs-offset-2'>
+              <ShowAddButton displayed={this.state.formDisplayed}
+                             onToggleForm={this.onToggleForm} />
+            </div>
+          </div>
+          <br />
+          <div className='row'>
+            <div className='col-lg-4 col-md-4 col-xs-8 col-lg-offset-4 col-md-offset-4 col-xs-offset-2'>
+              <FeedForm displayed={this.state.formDisplayed} onNewItem={this.onNewItem}/>
+            </div>
+          </div>
         </div>
-        <FeedForm displayed={this.state.formDisplayed} onNewItem={this.onNewItem}/>
-        <br />
         <br />
         <FeedList items={this.state.items} onVote={this.onVote} />
       </div>
