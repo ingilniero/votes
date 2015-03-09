@@ -7,7 +7,7 @@
   "scripts": {},
   "author": "Gilberto Villa",
   "license": "BSD-2-Clause",
-  "devDependencies": {
+  "dependencies": {
     "react-tools": "~0.12.2",
     "reactify": "~0.17.1",
     "gulp-react": "~2.0.0",
@@ -17,9 +17,7 @@
     "gulp-open": "~0.3.1",
     "gulp-browserify": "~0.5.1",
     "lodash": "~2.4.1",
+    "react": "~0.12.2",
     "firebase": "~2.1.1"
-  },
-  "dependencies": {
-    "react": "~0.12.2"
   }
 }
