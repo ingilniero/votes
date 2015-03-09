@@ -45,5 +45,14 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['browserify']);
+gulp.task('build', ['browserify']);
 
 gulp.task('serve', ['browserify', 'connect', 'open', 'watch']);
+
+gulp.task('serveprod', function() {
+  connect.server({
+    root: 'app',
+    port: process.env.PORT || 5000,
+    livereload: false
+  });
+});
