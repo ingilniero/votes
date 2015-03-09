@@ -4,7 +4,10 @@
   "private": true,
   "description": "Votes app",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "gulp build",
+    "start": "gulp serveprod"
+  },
   "author": "Gilberto Villa",
   "license": "BSD-2-Clause",
   "dependencies": {
